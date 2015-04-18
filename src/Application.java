@@ -1,5 +1,5 @@
-import java.util.Scanner;
 
+import java.util.Scanner;
 import docker.APIWrapper;
 import docker.RequestManager;
 import json.JSONArray;
@@ -31,5 +31,13 @@ public class Application {
 				break;
 			}
 		}
+		
+		/*
+		System.out.println("Start Nginx container");
+		NginxManager.initNginx();
+		NginxManager.startNginx();
+		
+		APIWrapper.executeCommand(NginxManager.id_container, new String[]{"cat","/opt/nginx/nginx.conf"});
+		*/
 	}
 }

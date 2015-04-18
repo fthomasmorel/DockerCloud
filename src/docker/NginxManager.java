@@ -1,7 +1,7 @@
 package docker;
 public class NginxManager {
 	
-	private static String id_container;
+	public static String id_container;
 
 	public static void initNginx(){
 		id_container = APIWrapper.createContainer(ContainerType.LoadBalancer);
