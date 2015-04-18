@@ -14,7 +14,7 @@ You need to install Docker and boot2docker first, and then activate the REST API
 
 ## TODO (explaination)
 
-To activate the Docker REST API you need this (from [here]("http://stackoverflow.com/questions/26824230/enabling-remote-api-in-docker-on-mac-os-x-boot2docker") ) :
+To activate the Docker REST API you need this (from [here]("http://stackoverflow.com/questions/26824230/enabling-remote-api-in-docker-on-mac-os-x-boot2docker")) :
 ```bash
 # Connect to boot2docker VM via SSH
 boot2docker ssh
