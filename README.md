@@ -1,10 +1,10 @@
 # DockerCloud
 
 ## What is DockerCloud
-Java program implementing auto-scaling policy through docker. There is one nginx container as a load-balancer, balancing on one or more Apache containers running a PHP application. 
+DockerCloud is a Java program implementing auto-scaling policy through docker. There is one nginx container as a load-balancer, balancing on one or more Apache containers running a PHP application. 
 The aim is to adapt the number of Apache containers depending on the entry charge of the load-balancer.
 
-The JAVA part use the Docker REST API to create/start/stop containers. Then through a thread, it analysis response time from the load-balancer to determine if it had to add or remove containers (TODO).
+The Java part use the Docker REST API to create/start/stop containers. Then through a thread, it analysis response time from the load-balancer to determine if it had to add or remove containers (TODO).
 
 
 ## Configuration on OS X
