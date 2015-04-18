@@ -1,3 +1,4 @@
+package docker;
 public class NginxManager {
 	
 	private static String id_container;

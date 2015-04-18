@@ -1,4 +1,7 @@
 import java.util.Scanner;
+
+import docker.APIWrapper;
+import docker.RequestManager;
 import json.JSONArray;
 import json.JSONObject;
 
