@@ -7,13 +7,11 @@ public class Application {
 
 	public static void main(String[] args) {
 		
-		//CLEAN
+		System.out.println("Cleaning Docker...");
 		JSONArray array = APIWrapper.getAllContainers();
-		for(int i=0 ; i < array.length() ; i++){
+		for(int i=0 ; i < array.length() ; i++)
 			APIWrapper.stopContainer((String)( (JSONObject) (array.get(i)) ).get("Id"));
-		}
-		
-		
+
 		RequestManager manager = new RequestManager();
 		manager.start();
 		

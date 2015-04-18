@@ -12,6 +12,8 @@ import java.net.URL;
 
 
 public class APIWrapper {
+	
+	private static final String url_base = Resources.api_ip_server + ":" + Resources.api_ip_port;
 
 	public static String createContainer(ContainerType _type){
 		try { 
@@ -22,7 +24,7 @@ public class APIWrapper {
 				body = getLoadBalancerJSONBody();
 			}
 			
-			URL url = new URL("http://192.168.59.103:2375/containers/create"); 
+			URL url = new URL("http://" + url_base + "/containers/create"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(false); 
@@ -56,7 +58,7 @@ public class APIWrapper {
 
 	public static boolean startContainer(String _id){
 		try { 
-			URL url = new URL("http://192.168.59.103:2375/containers/" + _id + "/start"); 
+			URL url = new URL("http://" + url_base + "/containers/" + _id + "/start"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(false); 
@@ -72,7 +74,7 @@ public class APIWrapper {
 	
 	public static boolean stopContainer(String _id){
 		try { 
-			URL url = new URL("http://192.168.59.103:2375/containers/" + _id + "/stop"); 
+			URL url = new URL("http://" + url_base + "/containers/" + _id + "/stop"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(false); 
@@ -88,7 +90,7 @@ public class APIWrapper {
 	
 	public static String getIpFromContainer(String _id){
 		try { 
-			URL url = new URL("http://192.168.59.103:2375/containers/" + _id + "/json"); 
+			URL url = new URL("http://" + url_base + "/containers/" + _id + "/json"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(false); 
@@ -121,7 +123,7 @@ public class APIWrapper {
 		.put("Cmd", new JSONArray(_command));
 		    
 		try { 
-			URL url = new URL("http://192.168.59.103:2375/containers/" + _id + "/exec"); 
+			URL url = new URL("http://" + url_base + "/containers/" + _id + "/exec"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(true); 
@@ -154,7 +156,7 @@ public class APIWrapper {
 		.put("Tty", false);
 		    
 		try { 
-			URL url = new URL("http://192.168.59.103:2375/exec/" + _id + "/start"); 
+			URL url = new URL("http://" + url_base + "/exec/" + _id + "/start"); 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 			connection.setDoOutput(true); 
 			connection.setInstanceFollowRedirects(true); 
@@ -183,7 +185,7 @@ public class APIWrapper {
 	
 	public static JSONArray getAllContainers(){
 		try { 
-	        URL url = new URL("http://192.168.59.103:2375/containers/json"); 
+	        URL url = new URL("http://" + url_base + "/containers/json"); 
 	        HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
 	        connection.setDoOutput(true); 
 	        connection.setInstanceFollowRedirects(false); 
@@ -224,15 +226,15 @@ public class APIWrapper {
 		.put("Env", JSONObject.NULL)
 		.put("Cmd",new JSONArray().put("/bin/sh").put("-c").put("while true; do sleep 1000; done"))
 		.put("Entrypoint", "")
-		.put("Image", "user/nginx_v1")
-		.put("Volumes", new JSONObject())//.put("/opt/nginx", new JSONObject()))
+		.put("Image", Resources.load_balancer_docker)
+		.put("Volumes", new JSONObject())
 		.put("WorkingDir", "")
 		.put("NetworkDisabled", false)
 		.put("MacAddress", "12:34:56:78:9a:bc")
 		.put("ExposedPorts", new JSONObject().put("80/tcp", new JSONObject()))
 		.put("SecurityOpts", new JSONArray().put(""))
 		.put("HostConfig", new JSONObject()		
-			.put("Binds", new JSONArray().put("/Users/florentthomas-morel/:/opt/nginx/:rw"))
+			.put("Binds", new JSONArray().put(Resources.conf_file_url+":/opt/nginx/:rw"))
 			.put("Links", new JSONArray())
 			.put("LxcConf", new JSONObject())
 			.put("PortBindings", new JSONObject().put("80/tcp", new JSONArray().put(new JSONObject().put("HostPort", "80"))))
@@ -263,7 +265,7 @@ public class APIWrapper {
 		.put("Env",JSONObject.NULL)
 		.put("Cmd",new JSONArray().put("/usr/sbin/apache2ctl").put("-D").put("FOREGROUND"))
 		.put("Dns",JSONObject.NULL)
-		.put("Image","user/apache_v1")
+		.put("Image", Resources.server_docker)
 		.put("Volumes",new JSONObject())
 		.put("VolumesFrom","")
 		.put("WorkingDir","");
