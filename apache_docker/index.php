@@ -10,7 +10,7 @@
 	$long = -1.6742900;
 
 	// on se connecte à MySQL 
-	$db = mysql_connect('192.168.59.3:3306', 'root', 'root'); 
+	$db = mysql_connect('ip_server:3306', user, pass); 
 
 	// on sélectionne la base 
 	mysql_select_db('ville',$db); 
