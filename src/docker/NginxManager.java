@@ -13,8 +13,7 @@ public class NginxManager {
 	}
 
 	public static void reloadNginx(){
-		APIWrapper.executeCommand(id_container, new String[]{"nginx", "-s", "stop"});
-		APIWrapper.executeCommand(id_container, new String[]{"nginx"});
+		APIWrapper.executeCommand(id_container, new String[]{"nginx", "-s", "reload"});
 	}
 	
 	public static void updateNginx(){

@@ -28,6 +28,10 @@ public class DockerManager {
 		
 	}
 	
+	public int getNumberOfDocker(){
+		return dockerStack.size();
+	}
+	
 	private class Couple{
 		public String id;
 		public String ip;

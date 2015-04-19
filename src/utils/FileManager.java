@@ -54,11 +54,11 @@ public class FileManager {
 	}
 
 
-	public static ArrayList<Float> readDataFromLog(int n){
+	public static ArrayList<Float> readDataFromLog(){
 		try {
 			ArrayList<Float> result = new ArrayList<Float>();
 			Runtime runtime = Runtime.getRuntime();
-			Process process = runtime.exec("tail -n " + n + " " + Resources.log_file_url);
+			Process process = runtime.exec("cat " + Resources.log_file_url + Resources.log_file);
 			InputStream is = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
@@ -76,5 +76,17 @@ public class FileManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void cleanLog(){
+		try {
+			PrintWriter writer = new PrintWriter(Resources.log_file_url + Resources.log_file, "UTF-8");
+			writer.print("");
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
