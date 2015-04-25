@@ -29,6 +29,7 @@ public class Simulation extends Thread{
 		while(running){			
 			if(simulationEnabled){
 				try {
+					//A REVOIR (comment monter en charge mais pas trop non plus)
 					Thread.sleep(200);
 					for(int i = 0; i < (frequence/5) ; i++){
 						new RequestThread(url).start();

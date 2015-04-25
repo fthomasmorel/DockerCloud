@@ -75,12 +75,11 @@ public class RequestManager extends Thread{
 			try {
 				Thread.sleep(5000);
 				int nbInstance = dockerManager.getNumberOfDocker();
-				System.out.println("max => " + (nbInstance+1) * 0.03);
-				System.out.println("min => " + (nbInstance+1) * 0.02);
 				
 				float average = computeAverageResponseTime(FileManager.readDataFromLog());
 				System.out.println(new DecimalFormat("#.###").format(average) + " with " + nbInstance + " instance(s)");
 				
+				//A REVOIR (partie decision d'ajout/retrait container)
 				if(average > (nbInstance+1) * 0.03 && average != 0) addContainer();
 				else if(average < (nbInstance+1) * 0.02 && average != 0) removeContainer();
 				
