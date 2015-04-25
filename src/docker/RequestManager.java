@@ -47,9 +47,6 @@ public class RequestManager extends Thread{
 			NginxManager.updateNginx();
 			NginxManager.reloadNginx();
 			System.out.println("Nginx container reloaded successfully");
-
-			System.out.println("Cleaning log");
-			FileManager.cleanLog();
 		}
 	}
 
@@ -66,25 +63,28 @@ public class RequestManager extends Thread{
 			NginxManager.updateNginx();
 			NginxManager.reloadNginx();
 			System.out.println("Nginx container reloaded successfully");
-
-			System.out.println("Cleaning log");
-			FileManager.cleanLog();
 		}
 	}
 
 	public void run(){
 		this.running = true;
 		Scanner sc = new Scanner(System.in);
-		//sc.nextInt();
+		sc.nextInt();
 		System.out.println("Running");
 		while(running){
 			try {
-				Thread.sleep(30000);
+				Thread.sleep(5000);
+				int nbInstance = dockerManager.getNumberOfDocker();
+				System.out.println("max => " + (nbInstance+1) * 0.03);
+				System.out.println("min => " + (nbInstance+1) * 0.02);
+				
 				float average = computeAverageResponseTime(FileManager.readDataFromLog());
-				System.out.println(new DecimalFormat("#.###").format(average) + " with " + dockerManager.getNumberOfDocker() + " instance(s)");
-				//if(average > 1) 
-				addContainer();
-				//else if(average < 0.5) removeContainer();
+				System.out.println(new DecimalFormat("#.###").format(average) + " with " + nbInstance + " instance(s)");
+				
+				if(average > (nbInstance+1) * 0.03 && average != 0) addContainer();
+				else if(average < (nbInstance+1) * 0.02 && average != 0) removeContainer();
+				
+				FileManager.cleanLog();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

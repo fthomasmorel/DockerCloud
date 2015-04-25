@@ -16,7 +16,7 @@ public class FileManager {
 			PrintWriter writer = new PrintWriter(Resources.conf_file_url + Resources.conf_file, "UTF-8");
 			writer.println("http {");
 			writer.println("upstream myapp1 {");
-			writer.println("least_conn;");
+		///	writer.println("least_conn;");
 			for(String ip : data){
 				writer.println("server " + ip + ";");
 			}
