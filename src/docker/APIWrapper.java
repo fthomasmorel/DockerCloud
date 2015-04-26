@@ -186,6 +186,7 @@ public class APIWrapper {
 		} 
 	}
 	
+	
 	public static JSONArray getAllContainers(){
 		try { 
 	        URL url = new URL("http://" + url_base + "/containers/json"); 
@@ -210,6 +211,7 @@ public class APIWrapper {
 	        throw new RuntimeException(e); 
 	    } 
 	}
+	
 	
 	private static JSONObject getLoadBalancerJSONBody() {
 		return new JSONObject()
