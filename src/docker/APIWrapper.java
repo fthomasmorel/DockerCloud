@@ -56,7 +56,6 @@ public class APIWrapper {
 	}
 	
 	
-
 	public static boolean startContainer(String _id){
 		try { 
 			URL url = new URL("http://" + url_base + "/containers/" + _id + "/start"); 
@@ -89,6 +88,7 @@ public class APIWrapper {
 		} 
 	}
 	
+	
 	public static String getIpFromContainer(String _id){
 		try { 
 			URL url = new URL("http://" + url_base + "/containers/" + _id + "/json"); 
@@ -114,6 +114,7 @@ public class APIWrapper {
 			throw new RuntimeException(e); 
 		} 
 	}
+	
 	
 	public static boolean executeCommand(String _id, String[] _command){
 		JSONObject nginx_exec = new JSONObject()
@@ -150,6 +151,7 @@ public class APIWrapper {
 			throw new RuntimeException(e); 
 		} 
 	}
+	
 	
 	private static boolean execute(String _id){
 		JSONObject nginx_exec = new JSONObject()

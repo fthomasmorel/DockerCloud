@@ -8,23 +8,23 @@ import utils.FileManager;
 
 public class RequestManager extends Thread{
 
-	private DockerManager dockerManager;
+	private ApacheManager apacheManager;
 	private int maxDocker;
 	private boolean running;
 
 	public RequestManager(int n){
 		this.maxDocker = n;
 		System.out.println("Create dockerManager");
-		dockerManager = new DockerManager();
+		apacheManager = new ApacheManager();
 		System.out.println("Start an Apache container");
-		dockerManager.startDocker();
-		System.out.println("Apache container started with IP<" + dockerManager.getAllIp().get(0)+">");
+		apacheManager.startDocker();
+		System.out.println("Apache container started with IP<" + apacheManager.getAllIp().get(0)+">");
 
 		System.out.println("Cleaning log");
 		FileManager.cleanLog();
 
 		System.out.println("First init of nginx.conf");
-		FileManager.writeFileWithData(dockerManager.getAllIp());
+		FileManager.writeFileWithData(apacheManager.getAllIp());
 
 		System.out.println("Start Nginx container");
 		NginxManager.initNginx();
@@ -34,14 +34,14 @@ public class RequestManager extends Thread{
 		System.out.println("Nginx container started successfully");
 	}
 
-	public void addContainer(){
-		if(dockerManager.getNumberOfDocker()<maxDocker){
+	private void addContainer(){
+		if(apacheManager.getNumberOfDocker()<maxDocker){
 			System.out.println("Start an Apache container");
-			dockerManager.startDocker();
-			System.out.println("Apache container started with IP<" + dockerManager.getAllIp().get(0)+">");
+			apacheManager.startDocker();
+			System.out.println("Apache container started with IP<" + apacheManager.getAllIp().get(0)+">");
 
 			System.out.println("Update of nginx.conf");
-			FileManager.writeFileWithData(dockerManager.getAllIp());
+			FileManager.writeFileWithData(apacheManager.getAllIp());
 
 			System.out.println("Reload Nginx container");
 			NginxManager.updateNginx();
@@ -50,14 +50,14 @@ public class RequestManager extends Thread{
 		}
 	}
 
-	public void removeContainer(){
-		if(dockerManager.getNumberOfDocker()>1){
+	private void removeContainer(){
+		if(apacheManager.getNumberOfDocker()>1){
 			System.out.println("Stop an Apache container");
-			dockerManager.stopDocker();
+			apacheManager.stopDocker();
 			System.out.println("An Apache container has been stopped");
 
 			System.out.println("Update of nginx.conf");
-			FileManager.writeFileWithData(dockerManager.getAllIp());
+			FileManager.writeFileWithData(apacheManager.getAllIp());
 
 			System.out.println("Reload Nginx container");
 			NginxManager.updateNginx();
@@ -74,14 +74,14 @@ public class RequestManager extends Thread{
 		while(running){
 			try {
 				Thread.sleep(5000);
-				int nbInstance = dockerManager.getNumberOfDocker();
+				int nbInstance = apacheManager.getNumberOfDocker();
 				
 				float average = computeAverageResponseTime(FileManager.readDataFromLog());
 				System.out.println(new DecimalFormat("#.###").format(average) + " with " + nbInstance + " instance(s)");
 				
 				//A REVOIR (partie decision d'ajout/retrait container)
-				if(average > (nbInstance+1) * 0.03 && average != 0) addContainer();
-				else if(average < (nbInstance+1) * 0.02 && average != 0) removeContainer();
+				if(average > 0.2 && average != 0) addContainer();
+				else if(average < 0.1 && average != 0) removeContainer();
 				
 				FileManager.cleanLog();
 			} catch (InterruptedException e) {
@@ -90,7 +90,7 @@ public class RequestManager extends Thread{
 		}
 	}
 
-	public float computeAverageResponseTime(ArrayList<Float> data){
+	private float computeAverageResponseTime(ArrayList<Float> data){
 		float res = 0;
 		for(Float f : data)
 			res += f;

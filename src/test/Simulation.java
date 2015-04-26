@@ -20,7 +20,6 @@ public class Simulation extends Thread{
 	}
 
 	public void setFrequence(int _frequence){
-		//if (0<= _frequence &&  _frequence <= 100)
 		frequence = _frequence;
 	}
 
@@ -30,8 +29,8 @@ public class Simulation extends Thread{
 			if(simulationEnabled){
 				try {
 					//A REVOIR (comment monter en charge mais pas trop non plus)
-					Thread.sleep(200);
-					for(int i = 0; i < (frequence/5) ; i++){
+					Thread.sleep(1000);
+					for(int i = 0; i < frequence ; i++){
 						new RequestThread(url).start();
 					}
 					

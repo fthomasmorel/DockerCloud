@@ -78,6 +78,7 @@ public class FileManager {
 		return null;
 	}
 	
+
 	public static void cleanLog(){
 		try {
 			PrintWriter writer = new PrintWriter(Resources.log_file_url + Resources.log_file, "UTF-8");
