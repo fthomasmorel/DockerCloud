@@ -270,7 +270,7 @@ public class APIWrapper {
 		.put("Env",JSONObject.NULL)
 		.put("Cmd",new JSONArray().put("/usr/sbin/apache2ctl").put("-D").put("FOREGROUND"))
 		.put("Dns",JSONObject.NULL)
-		.put("Image", Resources.server_docker)
+		.put("Image", Resources.instance_docker)
 		.put("Volumes",new JSONObject())
 		.put("VolumesFrom","")
 		.put("WorkingDir","");

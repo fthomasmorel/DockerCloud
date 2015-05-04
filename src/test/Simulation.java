@@ -1,13 +1,8 @@
 package test;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class Simulation extends Thread{
 
-	private final static String url = "http://192.168.59.103/index.php";
+	private final static String url = "http://10.0.1.8/index.php";
 	private boolean running;
 	private boolean simulationEnabled;
 	private static int frequence;
@@ -28,9 +23,8 @@ public class Simulation extends Thread{
 		while(running){			
 			if(simulationEnabled){
 				try {
-					//A REVOIR (comment monter en charge mais pas trop non plus)
 					Thread.sleep(1000);
-					for(int i = 0; i < frequence ; i++){
+					for(int i = 0; i < frequence*1.4 ; i++){
 						new RequestThread(url).start();
 					}
 					

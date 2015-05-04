@@ -37,6 +37,9 @@ public class UIDashboard extends JFrame implements ActionListener, ChangeListene
   public JButton startButton;
   public JButton stopButton;
   private JSlider frequenceValue;
+  
+  
+  int frequence = 0;
    
 
   public UIDashboard(DashboardDelegate _delegate) {
@@ -153,5 +156,9 @@ public class UIDashboard extends JFrame implements ActionListener, ChangeListene
 	public void stateChanged(ChangeEvent arg0) {
 		delegate.setFrequence(frequenceValue.getValue());
 	}
+
+	
+		
+	
     
 } 

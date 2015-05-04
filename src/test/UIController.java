@@ -2,7 +2,7 @@ package test;
 
 public class UIController extends Thread implements DashboardDelegate {
 	private UIDashboard dashboard;
-	private int frequence;
+	public int frequence;
 	private boolean running;
 	private boolean simulationEnabled;
 	private Simulation simulation;
@@ -12,18 +12,19 @@ public class UIController extends Thread implements DashboardDelegate {
 		simulation = new Simulation();
 		simulation.start();
 		frequence = 0;
-		simulationEnabled = false;
+		
 		initSimulation();
 	}
 
 	public void run(){
 		running = true;
+		simulation.startSimulation();
 		while(running){
 			try {
 				if(simulationEnabled){
+					Thread.sleep(1000);
 					dashboard.updateDataset(frequence);
 					simulation.setFrequence(frequence);
-					Thread.sleep(1000);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -36,7 +37,7 @@ public class UIController extends Thread implements DashboardDelegate {
 		simulationEnabled = false;
 		dashboard.clearChart();
 		dashboard.addSerie("% Charge");
-		
+
 		dashboard.startButton.setEnabled(true);
 		dashboard.stopButton.setEnabled(false);
 	}
@@ -47,7 +48,6 @@ public class UIController extends Thread implements DashboardDelegate {
 			System.out.println("Starting simulation");
 			simulation.startSimulation();
 			simulationEnabled = true;
-			
 			dashboard.startButton.setEnabled(false);
 			dashboard.stopButton.setEnabled(true);	
 		}
@@ -59,7 +59,7 @@ public class UIController extends Thread implements DashboardDelegate {
 			System.out.println("Stopped simulation");
 			simulation.stopSimulation();
 			simulationEnabled = false;
-			
+
 			dashboard.startButton.setEnabled(true);
 			dashboard.stopButton.setEnabled(false);
 		}
