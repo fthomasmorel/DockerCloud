@@ -1,7 +1,9 @@
 package docker;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
 import utils.FileManager;
+import utils.Resources;
 
 
 public class RequestManager extends Thread{
@@ -66,10 +68,10 @@ public class RequestManager extends Thread{
 				float average = computeAverageResponseTime(FileManager.readDataFromLog());
 				System.out.println(++i + ";" + new DecimalFormat("#.###").format(average) + ";" + nbInstance);
 				
-				if(average > 0.6 && average != 0){
+				if(average > Resources.trigger_max && average != 0){
 					adding++; 
 					deleting = 0;
-				}else if(average < 0.4 && average != 0){
+				}else if(average < Resources.trigger_min && average != 0){
 					deleting++;
 					adding = 0;
 				}else{
