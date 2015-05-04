@@ -7,9 +7,9 @@ public class UIController extends Thread implements DashboardDelegate {
 	private boolean simulationEnabled;
 	private Simulation simulation;
 
-	public UIController(){
+	public UIController(String url){
 		dashboard = new UIDashboard(this);
-		simulation = new Simulation();
+		simulation = new Simulation(url);
 		simulation.start();
 		frequence = 0;
 		

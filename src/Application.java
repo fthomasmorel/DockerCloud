@@ -22,7 +22,7 @@ public class Application {
 			manager.start();
 		}else if(args[0].equals("test") && args.length >= 2){
 			System.out.println("Starting Simulator...");
-			UIController controller = new UIController();
+			UIController controller = new UIController(args[1]);
 			controller.start();
 		}else{
 			showHelpCommand();return;

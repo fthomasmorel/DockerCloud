@@ -2,16 +2,17 @@ package test;
 
 public class Simulation extends Thread{
 
-	private final static String url = "http://10.0.1.8/index.php";
+	private String url = "";
 	private boolean running;
 	private boolean simulationEnabled;
 	private static int frequence;
 
-	public Simulation(){
+	public Simulation(String _url){
 		super();
 		running = false;
 		frequence = 0;
 		simulationEnabled = false;
+		url = _url;
 	}
 
 	public void setFrequence(int _frequence){
